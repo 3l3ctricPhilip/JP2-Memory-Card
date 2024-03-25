@@ -12,17 +12,18 @@ public class MatchingGame implements ActionListener {
     public MatchingGame() {
         this.mainFrame = new JFrame("Gra na poprawę pamięci - edycja papieska");
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.mainFrame.setBackground(Color.PINK);
         this.mainFrame.setResizable(false);
 
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
-        int screenWidth = screenSize.width;
-        int screenHeight = screenSize.height;
+        int screenWidth = 966;
+        int screenHeight = 966;
 
         this.mainFrame.setSize(screenWidth, screenHeight);
+        this.mainFrame.setLocationRelativeTo(null);
         this.mainContentPane = this.mainFrame.getContentPane();
         this.mainContentPane.setLayout(new BoxLayout(this.mainContentPane, BoxLayout.PAGE_AXIS));
+        this.mainContentPane.setBackground(Color.ORANGE);
 
         JMenuBar menuBar = new JMenuBar();
         this.mainFrame.setJMenuBar(menuBar);
@@ -50,6 +51,7 @@ public class MatchingGame implements ActionListener {
         JPanel panel = new JPanel(new GridLayout(4, 4));
 
         ImageIcon backIcon = this.cardIcon[8];
+        panel.setOpaque(false);
         CardController controller = new CardController();
 
         int[] cardsToAdd = new int[16];
