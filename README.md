@@ -1,6 +1,6 @@
-# Gra na poprawę pamięci - JP2_memory_game
+# Gra na poprawę pamięci - JP2 Memory Card
 
-"JP2 - Memory Card" to unikalna gra pamięciowa, która w wyjątkowy sposób nawiązuje do postaci świętego Jana Pawła II oraz jego słynnej anegdoty o kremówkach. Gra stanowi doskonałe połączenie rozrywki z ćwiczeniem pamięci i koncentracji, wprowadzając graczy w ciepłą i radosną atmosferę inspirowaną Papieżem Polakiem.
+"JP2 Memory Card" to unikalna gra pamięciowa, która w wyjątkowy sposób nawiązuje do postaci świętego Jana Pawła II oraz jego słynnej anegdoty o kremówkach. Gra stanowi doskonałe połączenie rozrywki z ćwiczeniem pamięci i koncentracji, wprowadzając graczy w ciepłą i radosną atmosferę inspirowaną Papieżem Polakiem.
 
 Cel gry:
 Celem gry jest odnalezienie par kart przedstawiających wizerunki Jana Pawła II. Każda karta z kremówką na odwrocie skrywa zdjęcie Papieża Polaka. Gracz, który odnajdzie pary w najkrótszym czasie wygrywa rozgrywkę.
