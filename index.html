@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JP2 Memory Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Gra na poprawę pamięci</h1>
+    <nav>
+      <button onclick="initGame()">Nowa gra</button>
+      <button onclick="showScores()">Najlepsze wyniki</button>
+    </nav>
+    <div id="timer">00:00</div>
+  </header>
+
+  <main>
+    <div id="card-grid"></div>
+  </main>
+
+  <div id="win-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Brawo!</h2>
+      <p>Twój czas: <strong id="win-time"></strong></p>
+      <div class="modal-buttons">
+        <button onclick="closeModal('win-modal'); initGame()">Zagraj ponownie</button>
+        <button onclick="closeModal('win-modal')">Zamknij</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="scores-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Najlepsze wyniki</h2>
+      <ol id="scores-list"></ol>
+      <div class="modal-buttons">
+        <button onclick="clearScores()">Wyczyść</button>
+        <button onclick="closeModal('scores-modal')">Zamknij</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+  <script>initGame();</script>
+</body>
+</html>
