@@ -176,8 +176,15 @@ function showWinModal(playerRank) {
 
 function restartGame() {
   closeModal('win-modal');
-  // Show name screen again for a new player, or just restart for the same player
   initGame();
+}
+
+function changePlayer() {
+  closeModal('win-modal');
+  const input = document.getElementById('player-name');
+  input.value = '';
+  document.getElementById('name-screen').classList.remove('hidden');
+  input.focus();
 }
 
 // ---- Scores modal ----
