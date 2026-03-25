@@ -13,6 +13,88 @@ body {
   align-items: center;
 }
 
+/* --- Name screen --- */
+
+#name-screen {
+  position: fixed;
+  inset: 0;
+  background: #f1c01e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+#name-screen.hidden {
+  display: none;
+}
+
+.name-screen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  padding: 40px;
+}
+
+.name-screen-content h1 {
+  font-size: 2.4rem;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.name-screen-content p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.85);
+}
+
+#player-name {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  width: 280px;
+  text-align: center;
+  outline: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transition: box-shadow 0.2s;
+}
+
+#player-name:focus {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+#player-name.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-6px); }
+  80%       { transform: translateX(6px); }
+}
+
+.name-screen-content button {
+  padding: 12px 36px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: #fff;
+  color: #b36200;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transition: background 0.15s, transform 0.1s;
+}
+
+.name-screen-content button:hover {
+  background: #ffe0a0;
+  transform: translateY(-2px);
+}
+
 /* --- Header --- */
 
 header {
@@ -117,10 +199,6 @@ main {
   overflow: hidden;
 }
 
-.card-back {
-  /* cream puff side — visible by default */
-}
-
 .card-face {
   transform: rotateY(180deg);
 }
@@ -145,6 +223,7 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 100;
+  padding: 16px;
 }
 
 .modal.hidden {
@@ -154,37 +233,40 @@ main {
 .modal-content {
   background: #fff;
   border-radius: 14px;
-  padding: 36px 40px;
+  padding: 32px 36px;
   text-align: center;
-  min-width: 280px;
+  width: min(460px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 
 .modal-content h2 {
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   color: #a7b300;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
-.modal-content p {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 24px;
+.modal-content > p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 20px;
 }
 
 .modal-buttons {
   display: flex;
   gap: 10px;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .modal-buttons button {
-  background: #f28c00;
+  background: #f1c01e;
   color: #fff;
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
@@ -194,20 +276,65 @@ main {
   background: #b36200;
 }
 
-#scores-list {
+/* --- Ranking list --- */
+
+.ranking-list {
   list-style: none;
-  margin: 0 0 24px;
   padding: 0;
+  margin: 0;
   text-align: left;
 }
 
-#scores-list li {
-  padding: 6px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 1rem;
+.ranking-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 0.95rem;
   color: #333;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-#scores-list li:last-child {
+.ranking-list li:last-child {
   border-bottom: none;
+}
+
+.ranking-list li.current-player {
+  background: #fff8e0;
+  font-weight: 700;
+  color: #b36200;
+}
+
+.ranking-list li.ellipsis {
+  justify-content: center;
+  color: #aaa;
+  font-size: 1.1rem;
+  border-bottom: none;
+  padding: 2px 0;
+}
+
+.ranking-list li.no-scores {
+  justify-content: center;
+  color: #aaa;
+}
+
+.ranking-list .rank {
+  min-width: 32px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.ranking-list .player-name {
+  flex: 1;
+}
+
+.ranking-list .player-time {
+  font-variant-numeric: tabular-nums;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.ranking-list li.current-player .player-time {
+  color: #b36200;
 }

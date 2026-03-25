@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,6 +7,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Ekran startowy -->
+  <div id="name-screen">
+    <div class="name-screen-content">
+      <h1>JP2 Memory Card</h1>
+      <p>Gra na poprawę pamięci</p>
+      <input type="text" id="player-name" placeholder="Wpisz swoje imię..." maxlength="20" autofocus>
+      <button onclick="startGame()">Zagraj!</button>
+    </div>
+  </div>
 
   <header>
     <h1>Gra na poprawę pamięci</h1>
@@ -22,21 +31,24 @@
     <div id="card-grid"></div>
   </main>
 
+  <!-- Modal wygranej z rankingiem -->
   <div id="win-modal" class="modal hidden">
     <div class="modal-content">
-      <h2>Brawo!</h2>
-      <p>Twój czas: <strong id="win-time"></strong></p>
+      <h2>Brawo, <span id="win-player"></span>!</h2>
+      <p>Twój czas: <strong id="win-time"></strong> &nbsp;·&nbsp; <span id="win-rank"></span></p>
+      <ol id="win-ranking" class="ranking-list"></ol>
       <div class="modal-buttons">
-        <button onclick="closeModal('win-modal'); initGame()">Zagraj ponownie</button>
-        <button onclick="closeModal('win-modal')">Zamknij</button>
+        <button onclick="restartGame()">Zagraj ponownie</button>
+        <button onclick="showScores(); closeModal('win-modal')">Pełny ranking</button>
       </div>
     </div>
   </div>
 
+  <!-- Modal rankingu -->
   <div id="scores-modal" class="modal hidden">
     <div class="modal-content">
       <h2>Najlepsze wyniki</h2>
-      <ol id="scores-list"></ol>
+      <ol id="scores-ranking" class="ranking-list"></ol>
       <div class="modal-buttons">
         <button onclick="clearScores()">Wyczyść</button>
         <button onclick="closeModal('scores-modal')">Zamknij</button>
@@ -45,6 +57,5 @@
   </div>
 
   <script src="game.js"></script>
-  <script>initGame();</script>
 </body>
 </html>

@@ -86,7 +86,32 @@ class Card {
 let timerInterval = null;
 let seconds = 0;
 let matchedPairs = 0;
+let currentPlayer = '';
 const TOTAL_PAIRS = 8;
+
+// ---- Name screen ----
+
+function startGame() {
+  const input = document.getElementById('player-name');
+  const name = input.value.trim();
+  if (!name) {
+    input.focus();
+    input.classList.add('shake');
+    setTimeout(() => input.classList.remove('shake'), 400);
+    return;
+  }
+  currentPlayer = name;
+  document.getElementById('name-screen').classList.add('hidden');
+  initGame();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('player-name').addEventListener('keydown', e => {
+    if (e.key === 'Enter') startGame();
+  });
+});
+
+// ---- Game init ----
 
 function initGame() {
   clearInterval(timerInterval);
@@ -118,8 +143,8 @@ function onMatch() {
   matchedPairs++;
   if (matchedPairs === TOTAL_PAIRS) {
     clearInterval(timerInterval);
-    saveScore(seconds);
-    setTimeout(showWinModal, 600);
+    const rank = saveScore(currentPlayer, seconds);
+    setTimeout(() => showWinModal(rank), 600);
   }
 }
 
@@ -139,45 +164,85 @@ function formatTime(totalSeconds) {
 
 // ---- Win modal ----
 
-function showWinModal() {
+function showWinModal(playerRank) {
+  document.getElementById('win-player').textContent = currentPlayer;
   document.getElementById('win-time').textContent = formatTime(seconds);
+  document.getElementById('win-rank').textContent =
+    playerRank <= 10 ? `Miejsce #${playerRank} w rankingu!` : `Twoje miejsce: #${playerRank}`;
+
+  renderRanking('win-ranking', playerRank);
   document.getElementById('win-modal').classList.remove('hidden');
+}
+
+function restartGame() {
+  closeModal('win-modal');
+  // Show name screen again for a new player, or just restart for the same player
+  initGame();
+}
+
+// ---- Scores modal ----
+
+function showScores() {
+  renderRanking('scores-ranking', null);
+  document.getElementById('scores-modal').classList.remove('hidden');
+}
+
+// ---- Ranking renderer ----
+
+function renderRanking(containerId, highlightRank) {
+  const scores = getScores();
+  const container = document.getElementById(containerId);
+
+  if (scores.length === 0) {
+    container.innerHTML = '<li class="no-scores">Brak wyników</li>';
+    return;
+  }
+
+  const top10 = scores.slice(0, 10);
+  let html = top10.map((entry, i) => {
+    const rank = i + 1;
+    const isCurrent = highlightRank !== null && rank === highlightRank;
+    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `${rank}.`;
+    return `<li class="${isCurrent ? 'current-player' : ''}">
+      <span class="rank">${medal}</span>
+      <span class="player-name">${entry.name}</span>
+      <span class="player-time">${formatTime(entry.time)}</span>
+    </li>`;
+  }).join('');
+
+  // If player is outside top 10, show their position below
+  if (highlightRank !== null && highlightRank > 10) {
+    const playerEntry = scores[highlightRank - 1];
+    html += `<li class="ellipsis">...</li>`;
+    html += `<li class="current-player">
+      <span class="rank">${highlightRank}.</span>
+      <span class="player-name">${playerEntry.name}</span>
+      <span class="player-time">${formatTime(playerEntry.time)}</span>
+    </li>`;
+  }
+
+  container.innerHTML = html;
 }
 
 // ---- High scores ----
 
 const SCORES_KEY = 'jp2scores';
 
-function saveScore(time) {
+function saveScore(name, time) {
   let scores = getScores();
-  scores.push(time);
-  scores.sort((a, b) => a - b);
-  scores = scores.slice(0, 10);
+  scores.push({ name, time });
+  scores.sort((a, b) => a.time - b.time);
   localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
+  return scores.findIndex(e => e.name === name && e.time === time) + 1;
 }
 
 function getScores() {
   return JSON.parse(localStorage.getItem(SCORES_KEY) || '[]');
 }
 
-function showScores() {
-  const scores = getScores();
-  const list = document.getElementById('scores-list');
-
-  if (scores.length === 0) {
-    list.innerHTML = '<li>Brak wyników</li>';
-  } else {
-    list.innerHTML = scores
-      .map((s, i) => `<li>${i + 1}. &nbsp; ${formatTime(s)}</li>`)
-      .join('');
-  }
-
-  document.getElementById('scores-modal').classList.remove('hidden');
-}
-
 function clearScores() {
   localStorage.removeItem(SCORES_KEY);
-  document.getElementById('scores-list').innerHTML = '<li>Brak wyników</li>';
+  renderRanking('scores-ranking', null);
 }
 
 // ---- Utils ----
