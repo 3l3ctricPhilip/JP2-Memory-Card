@@ -314,7 +314,8 @@ main {
   padding: 2px 0;
 }
 
-.ranking-list li.no-scores {
+.ranking-list li.no-scores,
+.ranking-list li.loading {
   justify-content: center;
   color: #aaa;
 }

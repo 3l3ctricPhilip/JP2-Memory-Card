@@ -139,12 +139,12 @@ function initGame() {
   }, 1000);
 }
 
-function onMatch() {
+async function onMatch() {
   matchedPairs++;
   if (matchedPairs === TOTAL_PAIRS) {
     clearInterval(timerInterval);
-    const rank = saveScore(currentPlayer, seconds);
-    setTimeout(() => showWinModal(rank), 600);
+    setTimeout(() => showWinModal(), 600);
+    saveScore(currentPlayer, seconds);
   }
 }
 
@@ -164,14 +164,18 @@ function formatTime(totalSeconds) {
 
 // ---- Win modal ----
 
-function showWinModal(playerRank) {
+async function showWinModal() {
   document.getElementById('win-player').textContent = currentPlayer;
   document.getElementById('win-time').textContent = formatTime(seconds);
-  document.getElementById('win-rank').textContent =
-    playerRank <= 10 ? `Miejsce #${playerRank} w rankingu!` : `Twoje miejsce: #${playerRank}`;
-
-  renderRanking('win-ranking', playerRank);
+  document.getElementById('win-rank').textContent = '';
+  document.getElementById('win-ranking').innerHTML = '<li class="loading">Ładowanie rankingu...</li>';
   document.getElementById('win-modal').classList.remove('hidden');
+
+  await renderRanking('win-ranking', currentPlayer, seconds);
+
+  const rank = getRankFromList('win-ranking', currentPlayer, seconds);
+  document.getElementById('win-rank').textContent =
+    rank <= 10 ? `Miejsce #${rank} w rankingu!` : `Twoje miejsce: #${rank}`;
 }
 
 function restartGame() {
@@ -189,40 +193,50 @@ function changePlayer() {
 
 // ---- Scores modal ----
 
-function showScores() {
-  renderRanking('scores-ranking', null);
+async function showScores() {
+  document.getElementById('scores-ranking').innerHTML = '<li class="loading">Ładowanie...</li>';
   document.getElementById('scores-modal').classList.remove('hidden');
+  await renderRanking('scores-ranking', null, null);
 }
 
 // ---- Ranking renderer ----
 
-function renderRanking(containerId, highlightRank) {
-  const scores = getScores();
+async function renderRanking(containerId, highlightName, highlightTime) {
   const container = document.getElementById(containerId);
 
-  if (scores.length === 0) {
+  const snapshot = await window.db
+    .collection('scores')
+    .orderBy('time')
+    .get();
+
+  const all = snapshot.docs.map(d => d.data());
+
+  if (all.length === 0) {
     container.innerHTML = '<li class="no-scores">Brak wyników</li>';
     return;
   }
 
-  const top10 = scores.slice(0, 10);
+  const top10 = all.slice(0, 10);
+  const playerRank = highlightName !== null
+    ? all.findIndex(e => e.name === highlightName && e.time === highlightTime) + 1
+    : null;
+
   let html = top10.map((entry, i) => {
     const rank = i + 1;
-    const isCurrent = highlightRank !== null && rank === highlightRank;
+    const isCurrent = rank === playerRank;
     const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `${rank}.`;
-    return `<li class="${isCurrent ? 'current-player' : ''}">
+    return `<li class="${isCurrent ? 'current-player' : ''}" data-rank="${rank}">
       <span class="rank">${medal}</span>
       <span class="player-name">${entry.name}</span>
       <span class="player-time">${formatTime(entry.time)}</span>
     </li>`;
   }).join('');
 
-  // If player is outside top 10, show their position below
-  if (highlightRank !== null && highlightRank > 10) {
-    const playerEntry = scores[highlightRank - 1];
+  if (playerRank !== null && playerRank > 10) {
+    const playerEntry = all[playerRank - 1];
     html += `<li class="ellipsis">...</li>`;
-    html += `<li class="current-player">
-      <span class="rank">${highlightRank}.</span>
+    html += `<li class="current-player" data-rank="${playerRank}">
+      <span class="rank">${playerRank}.</span>
       <span class="player-name">${playerEntry.name}</span>
       <span class="player-time">${formatTime(playerEntry.time)}</span>
     </li>`;
@@ -231,25 +245,28 @@ function renderRanking(containerId, highlightRank) {
   container.innerHTML = html;
 }
 
-// ---- High scores ----
-
-const SCORES_KEY = 'jp2scores';
-
-function saveScore(name, time) {
-  let scores = getScores();
-  scores.push({ name, time });
-  scores.sort((a, b) => a.time - b.time);
-  localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
-  return scores.findIndex(e => e.name === name && e.time === time) + 1;
+function getRankFromList(containerId, name, time) {
+  const items = document.querySelectorAll(`#${containerId} li.current-player`);
+  if (items.length === 0) return 999;
+  return parseInt(items[0].dataset.rank) || 999;
 }
 
-function getScores() {
-  return JSON.parse(localStorage.getItem(SCORES_KEY) || '[]');
+// ---- Firestore: save & clear ----
+
+async function saveScore(name, time) {
+  await window.db.collection('scores').add({
+    name,
+    time,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
 }
 
-function clearScores() {
-  localStorage.removeItem(SCORES_KEY);
-  renderRanking('scores-ranking', null);
+async function clearScores() {
+  const snapshot = await window.db.collection('scores').get();
+  const batch = window.db.batch();
+  snapshot.docs.forEach(doc => batch.delete(doc.ref));
+  await batch.commit();
+  document.getElementById('scores-ranking').innerHTML = '<li class="no-scores">Brak wyników</li>';
 }
 
 // ---- Utils ----
