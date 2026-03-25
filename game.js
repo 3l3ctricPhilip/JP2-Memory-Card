@@ -251,7 +251,7 @@ function getRankFromList(containerId, name, time) {
   return parseInt(items[0].dataset.rank) || 999;
 }
 
-// ---- Firestore: save & clear ----
+// ---- Firestore: save ----
 
 async function saveScore(name, time) {
   await window.db.collection('scores').add({
@@ -261,13 +261,6 @@ async function saveScore(name, time) {
   });
 }
 
-async function clearScores() {
-  const snapshot = await window.db.collection('scores').get();
-  const batch = window.db.batch();
-  snapshot.docs.forEach(doc => batch.delete(doc.ref));
-  await batch.commit();
-  document.getElementById('scores-ranking').innerHTML = '<li class="no-scores">Brak wyników</li>';
-}
 
 // ---- Utils ----
 
