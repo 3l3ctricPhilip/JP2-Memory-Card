@@ -18,11 +18,14 @@
     </div>
   </div>
 
+  <audio id="bg-music" src="audio/Jan Paweł II - Barka.mp3" loop></audio>
+
   <header>
     <h1>JP2 Memory Card - gra na poprawę pamięci.</h1>
     <nav>
       <button onclick="initGame()">Nowa gra</button>
       <button onclick="showScores()">Najlepsze wyniki</button>
+      <button id="mute-btn" onclick="toggleMute()" title="Wycisz cudowną pieśń">🔊</button>
     </nav>
     <div id="timer">00:00</div>
   </header>

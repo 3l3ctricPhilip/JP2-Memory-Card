@@ -102,7 +102,17 @@ function startGame() {
   }
   currentPlayer = name;
   document.getElementById('name-screen').classList.add('hidden');
+  document.getElementById('bg-music').play();
   initGame();
+}
+
+// ---- Audio ----
+
+function toggleMute() {
+  const music = document.getElementById('bg-music');
+  const btn = document.getElementById('mute-btn');
+  music.muted = !music.muted;
+  btn.textContent = music.muted ? '🔇' : '🔊';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
