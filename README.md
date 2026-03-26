@@ -14,6 +14,10 @@ Celem gry jest odnalezienie par kart przedstawiających wizerunki Jana Pawła II
 Objective of the game:
 The goal is to find matching pairs of cards featuring images of Pope John Paul II. Each card, with a cream puff on the back, hides a picture of the Polish Pope. The player who matches all the pairs in the shortest time wins the game.
 
-![image](https://github.com/user-attachments/assets/13bee621-607c-4348-b3bd-62a3f0a9a697)
+<img width="2503" height="1278" alt="Screenshot 2026-03-26 084217" src="https://github.com/user-attachments/assets/455fa51e-1058-43d8-8488-7c365e5c72b1" />
 
-![image](https://github.com/user-attachments/assets/b542751e-2782-4899-b4b1-bf6bd2136242)
+<img width="771" height="1152" alt="Screenshot 2026-03-26 084228" src="https://github.com/user-attachments/assets/db4e18fd-8033-4dc0-8f82-3946c6feec20" />
+
+<img width="723" height="1146" alt="Screenshot 2026-03-26 084321" src="https://github.com/user-attachments/assets/620087de-0ed2-4833-823d-eba2f56589a6" />
+
+<img width="790" height="1156" alt="Screenshot 2026-03-26 084347" src="https://github.com/user-attachments/assets/f05ea502-1cb6-4415-9330-3a63073645fa" />
