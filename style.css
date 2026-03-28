@@ -269,16 +269,16 @@ main {
 
 .modal-content h2 {
   font-size: 1.7rem;
-  color: #a7b300;
+  color: #f1c01e;
   margin-bottom: 8px;
 }
 
 #scores-modal .modal-content h2 {
-  color: #add3e4;
+  color: #f1c01e;
 }
 
 #scores-modal .ranking-list li {
-  color: #add3e4;
+  color: #333;
 }
 
 .modal-content > p {
