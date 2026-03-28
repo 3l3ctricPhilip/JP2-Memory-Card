@@ -273,6 +273,10 @@ main {
   margin-bottom: 8px;
 }
 
+#scores-modal .modal-content h2 {
+  color: #add3e4;
+}
+
 .modal-content > p {
   font-size: 0.95rem;
   color: #666;
