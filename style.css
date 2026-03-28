@@ -337,7 +337,7 @@ main {
 .ranking-list li.current-player {
   background: #fff8e0;
   font-weight: 700;
-  color: #add3e4;
+  color: #333;
 }
 
 .ranking-list li.ellipsis {
