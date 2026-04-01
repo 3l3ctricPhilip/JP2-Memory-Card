@@ -7,7 +7,8 @@
 body {
   background-color: #f1c01e;
   font-family: 'Segoe UI', sans-serif;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,6 +177,7 @@ nav button:hover {
 
 main {
   flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,7 +188,10 @@ main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  width: min(680px, 96vw);
+  /* Szerokość ograniczona przez: maks 680px, 96vw, lub wyliczona z dostępnej wysokości.
+     Wzór: grid wypełnia 4 rzędy kart 3:4, więc width = (avail_h - 3*gap) * 0.75 + 3*gap
+     avail_h = 100dvh - ~170px (header ~105px + padding główny ~32px + margines ~33px) */
+  width: min(680px, 96vw, calc((100dvh - 170px) * 0.75 + 36px));
 }
 
 /* --- Card --- */
@@ -274,7 +279,7 @@ main {
 }
 
 #scores-modal .modal-content h2 {
-  color: #f1c01e;
+  color: #f1c01e ;
 }
 
 #scores-modal .ranking-list li {
@@ -322,7 +327,7 @@ main {
 .ranking-list li {
   display: flex;
   align-items: center;
-  gap: 10px;,
+  gap: 10px;
   padding: 7px 10px;
   border-radius: 7px;
   font-size: 0.95rem;
