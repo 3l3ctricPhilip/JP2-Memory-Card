@@ -1,12 +1,12 @@
 # Gra na poprawę pamięci - JP2 Memory Card
 
-<img width="2560" height="1600" alt="Screenshot 2026-03-26 085228" src="https://github.com/user-attachments/assets/347c8d27-bf06-4b91-9178-191ffe57b6f1" />
+https://3l3ctricphilip.github.io/JP2-Memory-Card/
 
-<img width="2560" height="1600" alt="Screenshot 2026-03-26 085341" src="https://github.com/user-attachments/assets/aee98d45-d13d-47d7-8885-ca363879e282" />
+<img width="2560" height="1600" alt="Screenshot 2026-04-04 184633" src="https://github.com/user-attachments/assets/cc26f18c-8d0f-4fe8-9492-9c2fa948902b" />
 
-<img width="2560" height="1600" alt="Screenshot 2026-03-26 085138" src="https://github.com/user-attachments/assets/b5985c1b-854e-41a7-9507-e5693fa1c0e2" />
+<img width="2560" height="1600" alt="Screenshot 2026-04-04 184714" src="https://github.com/user-attachments/assets/5ec15e03-1816-419e-9ef9-d05006afdc67" />
 
-<img width="2560" height="1600" alt="Screenshot 2026-03-26 085217" src="https://github.com/user-attachments/assets/2c1f4af0-e380-4714-8b4c-abda27a47772" />
+<img width="2560" height="1600" alt="Screenshot 2026-04-04 184748" src="https://github.com/user-attachments/assets/21d2f9b6-2358-41b9-9c39-22b77a61f717" />
 
 🇵🇱 JP2 Memory Card – Gra na poprawę pamięci
 
